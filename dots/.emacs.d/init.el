@@ -36,6 +36,7 @@
 (load "my_avy")
 ;;(load "my_python")
 (load "my_golang")
+(load "my_playground")
 
 ;; wsl setting
 (when (and (equal system-type 'gnu/linux)
