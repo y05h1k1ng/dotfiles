@@ -48,9 +48,9 @@
       (isearch-toggle-input-method))))
 
 ;; IME をトグルするキー設定
-(global-set-key (kbd "<zenkaku-hankaku>") 'toggle-input-method)
-(define-key isearch-mode-map (kbd "<zenkaku-hankaku>") 'isearch-toggle-input-method)
-(define-key wdired-mode-map (kbd "<zenkaku-hankaku>") 'toggle-input-method)
+(global-set-key (kbd "M-`") 'toggle-input-method)
+(define-key isearch-mode-map (kbd "M-`") 'isearch-toggle-input-method)
+(define-key wdired-mode-map (kbd "M-`") 'toggle-input-method)
 
 ;; IME を無効にするキー設定
 (global-set-key (kbd "C-<f1>") 'disable-input-method)
