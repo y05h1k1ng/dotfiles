@@ -1,6 +1,5 @@
 ;; color theme
-(load-theme 'sanityinc-tomorrow-blue t)
-
+(load-theme 'zenburn t)
 ;; 行番号
 (require 'linum)
 (global-linum-mode 1)

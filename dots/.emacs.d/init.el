@@ -49,7 +49,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(company-go go-eldoc mozc-im mozc-popup go-mode lsp-python-ms yasnippet wgrep web-mode undo-tree rainbow-delimiters org nyan-mode multiple-cursors markdown-mode magit flycheck emoji-cheat-sheet-plus eglot counsel company color-theme-sanityinc-tomorrow all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-dired ace-window)))
+   '(zenburn-theme company-go go-eldoc mozc-im mozc-popup go-mode lsp-python-ms yasnippet wgrep web-mode undo-tree rainbow-delimiters org nyan-mode multiple-cursors markdown-mode magit flycheck emoji-cheat-sheet-plus eglot counsel company color-theme-sanityinc-tomorrow all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-dired ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
