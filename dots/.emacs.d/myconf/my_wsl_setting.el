@@ -4,6 +4,9 @@
 ;;(require 'mozc-cursor-color)
 (require 'wdired)
 
+;; frame size
+(setq default-frame-alist (append (list '(width . 72) '(height . 40))))
+
 (setq default-input-method "japanese-mozc-im")
 
 ;; popupスタイル を使用する
