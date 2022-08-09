@@ -39,6 +39,9 @@
 ;; tab -> space
 (setq-default indent-tabs-mode nil)
 
+;; 日本語フォント
+(set-language-environment "Japanese")
+
 (use-package underwater-theme
   :ensure t
   :config
