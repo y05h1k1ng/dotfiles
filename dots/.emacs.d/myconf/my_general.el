@@ -1,8 +1,8 @@
 ;; color theme
-(load-theme 'zenburn t)
+;; (load-theme 'zenburn t)
 ;; 行番号
-(require 'linum)
-(global-linum-mode 1)
+;; (require 'linum)
+;; (global-linum-mode 1)
 
 ;; メニューバーを非表示
 (menu-bar-mode 0)

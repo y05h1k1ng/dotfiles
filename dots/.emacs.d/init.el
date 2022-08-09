@@ -14,9 +14,51 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(menu-bar-mode 0)
+(tool-bar-mode 0)
+(scroll-bar-mode 0)
+
+;; 警告音もフラッシュもすべて無効
+(setq ring-bell-function 'ignore)
+
+;;; バックアップファイル(*.~)
+(setq backup-directory-alist '((".*" . "~/.backup_emacs"))) ;; ~/.backup_emacs 以下に配置
+(setq version-control t) ;; 複数保存
+(setq kept-new-versions 5) ;; 最新の保持数
+(setq kept-old-versions 1) ;; 最古の保持数
+(setq delete-old-versions t) ;; 範囲外削除
+(setq auto-save-timeout 10) ;; default 30s
+(setq auto-save-interval 100) ;; default 300type
+
+;;; lock file(.#*) は作成しない
+(setq create-lockfiles nil)
+
+;; dismiss startup screen
+(setq inhibit-startup-screen t)
+
+;; tab -> space
+(setq-default indent-tabs-mode nil)
+
+(use-package underwater-theme
+  :ensure t
+  :config
+  (load-theme 'underwater t)
+  )
+
+(use-package linum
+  :config
+  (global-linum-mode t)
+  )
+
+(use-package winner
+  :config
+  (winner-mode t)
+  )
+
+
 (add-to-list 'load-path "~/.emacs.d/myconf")
 
-(load "my_general")
+;; (load "my_general")
 (load "my_company")
 (load "my_ivy_swiper_counsel")
 (load "my_flycheck")
@@ -49,7 +91,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(zenburn-theme company-go go-eldoc mozc-im mozc-popup go-mode lsp-python-ms yasnippet wgrep web-mode undo-tree rainbow-delimiters org nyan-mode multiple-cursors markdown-mode magit flycheck emoji-cheat-sheet-plus eglot counsel company color-theme-sanityinc-tomorrow all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-dired ace-window)))
+   '(use-package zenburn-theme company-go go-eldoc mozc-im mozc-popup go-mode lsp-python-ms yasnippet wgrep web-mode undo-tree rainbow-delimiters org nyan-mode multiple-cursors markdown-mode magit flycheck emoji-cheat-sheet-plus eglot counsel company color-theme-sanityinc-tomorrow all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-dired ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
