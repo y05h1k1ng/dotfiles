@@ -14,6 +14,15 @@
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+;; use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package)
+  )
+(eval-when-compile
+  (require 'use-package)
+  )
+
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
@@ -58,30 +67,198 @@
   (winner-mode t)
   )
 
+(use-package use-package-ensure-system-package
+  :ensure t
+  )
 
-(add-to-list 'load-path "~/.emacs.d/myconf")
+;; (use-package ag
+;;   :ensure-system-package (ag . "sudo apt install silversearcher-ag"))
 
-;; (load "my_general")
-(load "my_company")
-(load "my_ivy_swiper_counsel")
-(load "my_flycheck")
-(load "my_git")
-(load "my_wgrep")
-(load "my_ace_window")
-(load "my_multiple_cursors")
-(load "my_yasnippet")
-(load "my_nyan")
-(load "my_all_the_icons")
-(load "my_undo_tree")
-(load "my_markdown")
-(load "my_rainbow-delimiters")
-(load "my_web")
-(load "my_org")
-(load "my_emoji")
-(load "my_avy")
+(use-package company
+  :ensure t
+  :bind (
+         :map company-active-map
+              ("C-n" . company-selection-next)
+              ("C-p" . company-selection-previous)
+         )
+  :config
+  (global-company-mode)
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t)
+  )
+
+(use-package ivy
+  :ensure t
+  :init (ivy-mode)
+  :bind (
+         ("C-c C-r" . ivy-resume)
+         )
+  :config
+  (setq ivy-use-virtual-buffers t)
+  (setq enable-recursive-minibuffers t)
+  )
+
+(use-package swisper
+  :ensure t
+  :bind (
+         ("C-s" . swiper)
+         )
+  :config
+  (setq search-default-mode #'char-fold-to-regexp)
+  )
+
+(use-package counsel
+  :ensure t
+  :ensure-system-package
+  (ag . "sudo apt -y install silversearcher-ag")
+  :bind (
+         ("M-x" . counsel-M-x)
+         ("C-x C-f" . counsel-find-file)
+         ("C-c i f" . counsel-describe-function)
+         ("C-c i v" . counsel-describe-variable)
+         ("C-c i o" . counsel-describe-symbol)
+         ("C-c i l" . counsel-find-library)
+         ("C-c i i" . counsel-info-lookup-symbol)
+         ("C-c i u" . counsel-unicode-char)
+         ("C-c g" . counsel-git)
+         ("C-c j" . counsel-git-grep)
+         ("C-c k" . counsel-ag)
+         ("C-x l" . counsel-locate)
+         :map minibuffer-local-map
+         ("C-r" . counsel-minibuffer-history)
+         )
+  )
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode)
+  :bind (
+         :map
+         ("C-c n" . flycheck-next-error)
+         ("C-c p" . flycheck-previous-error)
+         ("C-c d" . flycheck-list-errors)
+         )
+  )
+
+(use-package magit
+  :ensure t
+  :bind (
+         ("C-x g" . magit-status)
+         )
+  )
+
+(use-package wgrep
+  :ensure t
+  :config
+  (setf wgrep-enable-key "e")
+  (setq wgrep-auto-save-buffer t)
+  (setq wgrep-change-readonly-file t)
+  )
+
+(use-package ace-window
+  :ensure t
+  :bind (
+         ("M-o" . ace-window)
+         )
+  :config
+  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  )
+
+(use-package multiple-cursors
+  :ensure t
+  :bind (
+         ("C-S-c C-S-c" . mc/edit-lines)
+         ("C->" . mc/mark-next-like-this)
+         ("C-<" . mc/mark-previous-like-this)
+         ("C-c C-<" . mc/mark-all-like-this)
+         )
+  )
+
+(use-package nyan-mode
+  :ensure t
+  :init (nyan-mode t)
+  )
+
+(use-package undo-tree
+  :init (global-undo-tree-mode t)
+  :bind (
+         ("M-/" . undo-tree-redo)
+         )
+  :config
+  (setq undo-tree-auto-save-history nil)
+  )
+
+(use-package markdown-mode
+  :ensure t
+  :ensure-system-package (pandoc . "sudo apt -y install pandoc")
+  :mode ("\\.md\\'" . gfm-mode)
+  :config
+  (setq markdown-command "pandoc")
+  )
+
+(use-package rainbow-delimiters
+  :ensure t
+  :init (
+         (use-package cl-lib)
+         (use-package color)
+         )
+  :hook (prog-mode . rainbow-delimiters-mode)
+  :config
+  (defun rainbow-delimiters-using-stronger-colors()
+    (interactive)
+    (cl-loop
+     for index from 1 to rainbow-delimiters-max-face-count
+     do
+     (let ((face (intern (format "rainbow-delimiters-depth-%d-face" index))))
+       (cl-callf color-saturate-hsl (face-foreground face) 30)
+       )
+     )
+    )
+  (add-hook 'emacs-startup-hook 'rainbow-delimiters-using-stronger-colors)
+  )
+
+(use-package web-mode
+  :ensure t
+  :mode (
+         "\\.phtml\\'"
+         "\\.tpl\\.php\\'"
+         "\\.[agj]sp\\'"
+         "\\.as[cp]x\\'"
+         "\\.erb\\'"
+         "\\.mustache\\'"
+         "\\.djhtml\\'"
+         "\\.html?\\'"
+         )
+  )
+
+(use-package emoji-cheat-sheet-plus
+  :ensure t
+  :bind (
+         "C-c C-e" . emoji-cheat-sheet-plus-insert
+         )
+  :hook (
+         (org-mode-hook . emoji-cheat-sheet-plus-display-mode)
+         (markdown-mode-hook . emoji-cheat-sheet-plus-display-mode)
+         (magit-mode-hook . emoji-cheat-sheet-plus-display-mode)
+         )
+  )
+
+(use-package avy
+  :ensure t
+  :bind (
+         ("C-'" . avy-goto-char-2)
+         ("C-:" . avy-goto-char-timer)
+         ("M-g f" . avy-goto-line)
+         ("M-g w" . avy-goto-word-1)
+         )
+  )
+
+;; (add-to-list 'load-path "~/.emacs.d/myconf")
+;; (load "my_all_the_icons")
+;; (load "my_org")
 ;;(load "my_python")
-(load "my_golang")
-(load "my_playground")
+;; (load "my_golang")
 
 ;; wsl setting
 (when (and (equal system-type 'gnu/linux)
