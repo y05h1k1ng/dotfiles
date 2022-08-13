@@ -250,6 +250,19 @@
          )
   )
 
+(use-package highlight-symbol
+  :ensure t
+  :hook (
+         (prog-mode . highlight-symbol-mode)
+         (prog-mode . highlight-symbol-nav-mode)
+         )
+  :bind (
+         ("C-c C-l" . highlight-symbol-at-point)
+         )
+  :config
+  (setq highlight-symbol-idle-delay 1.0)
+  )
+
 (use-package mozc-im
   :ensure t
   :if (and (equal system-type 'gnu/linux)
