@@ -71,18 +71,15 @@
   :ensure t
   )
 
-;; (use-package ag
-;;   :ensure-system-package (ag . "sudo apt install silversearcher-ag"))
-
 (use-package company
   :ensure t
+  :init (global-company-mode)
   :bind (
          :map company-active-map
               ("C-n" . company-selection-next)
               ("C-p" . company-selection-previous)
          )
   :config
-  (global-company-mode)
   (setq company-idle-delay 0)
   (setq company-minimum-prefix-length 2)
   (setq company-selection-wrap-around t)
@@ -99,7 +96,7 @@
   (setq enable-recursive-minibuffers t)
   )
 
-(use-package swisper
+(use-package swiper
   :ensure t
   :bind (
          ("C-s" . swiper)
@@ -134,7 +131,7 @@
   :ensure t
   :init (global-flycheck-mode)
   :bind (
-         :map
+         :map global-map
          ("C-c n" . flycheck-next-error)
          ("C-c p" . flycheck-previous-error)
          ("C-c d" . flycheck-list-errors)
@@ -199,10 +196,9 @@
 
 (use-package rainbow-delimiters
   :ensure t
-  :init (
-         (use-package cl-lib)
-         (use-package color)
-         )
+  :init
+  (use-package cl-lib)
+  (use-package color)
   :hook (prog-mode . rainbow-delimiters-mode)
   :config
   (defun rainbow-delimiters-using-stronger-colors()
@@ -254,16 +250,69 @@
          )
   )
 
-;; (add-to-list 'load-path "~/.emacs.d/myconf")
-;; (load "my_all_the_icons")
-;; (load "my_org")
-;;(load "my_python")
-;; (load "my_golang")
-
-;; wsl setting
-(when (and (equal system-type 'gnu/linux)
+(use-package mozc-im
+  :ensure t
+  :if (and (equal system-type 'gnu/linux)
            (string-match-p "microsoft" (shell-command-to-string "uname -r")))
-  (load "my_wsl_setting"))
+  :init
+  (use-package mozc-popup)
+  (use-package wdired)
+  :bind (
+         ("M-`" . toggle-input-method)
+         ("C-<f1>" . disable-input-method)
+         ("C-<f2>" . enable-input-method)
+         :map isearch-mode-map
+         ("M-`" . isearch-toggle-input-method)
+         ("C-<f1>" . isearch-disable-input-method)
+         ("C-<f2>" . isearch-enable-input-method)
+         :map wdired-mode-map
+         ("M-`" . toggle-input-method)
+         ("C-<f1>" . disable-input-method)
+         ("C-<f2>" . enable-input-method)
+         )
+  :hook (
+         (isearch-mode-hook . (lambda () (setq im-state mozc-im-mode)))
+         (isearch-mode-end-hook . (lambda ()
+                                  (unless (eq im-state mozc-im-mode)
+                                    (if im-state
+                                        (activate-input-method default-input-method)
+                                      (deactivate-input-method)))))
+         )
+  :config
+  (setq default-frame-alist (append (list '(width . 72) '(height . 40))))
+  (setq default-input-method "japanese-mozc-im")
+  (setq mozc-candidate-style 'popup)
+  (blink-cursor-mode 0)
+  (defun enable-input-method (&optional arg interactive)
+    (interactive "P\np")
+    (if (not current-input-method)
+        (toggle-input-method arg interactive)))
+
+  (defun disable-input-method (&optional arg interactive)
+    (interactive "P\np")
+    (if current-input-method
+        (toggle-input-method arg interactive)))
+
+  (defun isearch-enable-input-method ()
+    (interactive)
+    (if (not current-input-method)
+        (isearch-toggle-input-method)
+      (cl-letf (((symbol-function 'toggle-input-method)
+                 (symbol-function 'ignore)))
+        (isearch-toggle-input-method))))
+
+  (defun isearch-disable-input-method ()
+    (interactive)
+    (if current-input-method
+        (isearch-toggle-input-method)
+      (cl-letf (((symbol-function 'toggle-input-method)
+                 (symbol-function 'ignore)))
+        (isearch-toggle-input-method))))
+  
+  (advice-add 'wdired-finish-edit
+              :after (lambda (&rest args)
+                       (deactivate-input-method)))
+  )
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
