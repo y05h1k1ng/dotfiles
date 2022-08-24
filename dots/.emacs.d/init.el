@@ -332,14 +332,19 @@
   :init
   (setq lsp-keymap-prefix "C-c l")
   :hook (
-         (python-mode . lsp) ;; major-mode
-         )
-  :config
-  (use-package which-key
+         ;; major-mode
+         (python-mode . lsp)
+         (go-mode . lsp)
+         ;; integration
+         (lsp-mode . lsp-enable-which-key-integration)
+         )  
+  :commands lsp
+  )
+
+(use-package which-key
     :ensure t
     :config
     (which-key-mode))
-  )
 
 (use-package lsp-pyright
   :ensure t
@@ -352,6 +357,20 @@
 (use-package lsp-ivy
   :ensure t
   :commands lsp-ivy-workspace-symbol
+  )
+
+(defun lsp-go-install-save-hooks()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t)
+  )
+
+(use-package go-mode
+  :ensure t
+  :mode (
+         ("\\.go\\'" . go-mode)
+         )
+  :init
+  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
   )
 
 (use-package smartparens
