@@ -328,6 +328,14 @@
                        (deactivate-input-method)))
   )
 
+(use-package smartparens
+  :ensure t
+  :init
+  (use-package smartparens-config)
+  :config
+  (smartparens-global-strict-mode t)
+  )
+
 (use-package recentf-ext
   :ensure t
   :config
