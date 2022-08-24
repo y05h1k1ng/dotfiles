@@ -122,6 +122,7 @@
          ("C-c j" . counsel-git-grep)
          ("C-c k" . counsel-ag)
          ("C-x l" . counsel-locate)
+         ("C-c r" . counsel-recentf)
          :map minibuffer-local-map
          ("C-r" . counsel-minibuffer-history)
          )
@@ -325,6 +326,15 @@
   (advice-add 'wdired-finish-edit
               :after (lambda (&rest args)
                        (deactivate-input-method)))
+  )
+
+(use-package recentf-ext
+  :ensure t
+  :config
+  (recentf-mode 1)
+  (setq recentf-max-saved-items 2000)
+  (setq recentf-exclude '(".recentf"))
+  (setq recentf-auto-cleanup 10)
   )
 
 (custom-set-variables
