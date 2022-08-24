@@ -349,6 +349,11 @@
                          (lsp)))
   )
 
+(use-package lsp-ivy
+  :ensure t
+  :commands lsp-ivy-workspace-symbol
+  )
+
 (use-package smartparens
   :ensure t
   :init
