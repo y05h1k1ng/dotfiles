@@ -367,8 +367,9 @@
   :config
   (recentf-mode 1)
   (setq recentf-max-saved-items 2000)
-  (setq recentf-exclude '(".recentf"))
-  (setq recentf-auto-cleanup 10)
+  (setq recentf-exclude '(".recentf" "COMMIT_EDITMSG"))
+  (setq recentf-auto-cleanup 'never)
+  (setq recentf-auto-save-timer (run-with-idle-timer 30 t 'recentf-save-list))
   )
 
 (use-package mwim
