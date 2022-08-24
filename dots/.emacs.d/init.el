@@ -328,6 +328,27 @@
                        (deactivate-input-method)))
   )
 
+(use-package lsp-mode
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook (
+         (python-mode . lsp) ;; major-mode
+         )
+  :config
+  (use-package which-key
+    :ensure t
+    :config
+    (which-key-mode))
+  )
+
+(use-package lsp-pyright
+  :ensure t
+  :ensure-system-package (pyright . "sudo npm -g install pyright")
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp)))
+  )
+
 (use-package smartparens
   :ensure t
   :init
@@ -359,7 +380,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(use-package zenburn-theme company-go go-eldoc mozc-im mozc-popup go-mode lsp-python-ms yasnippet wgrep web-mode undo-tree rainbow-delimiters org nyan-mode multiple-cursors markdown-mode magit flycheck emoji-cheat-sheet-plus eglot counsel company color-theme-sanityinc-tomorrow all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-dired ace-window)))
+   '(lsp-pyright use-package zenburn-theme company-go go-eldoc mozc-im mozc-popup go-mode lsp-python-ms yasnippet wgrep web-mode undo-tree rainbow-delimiters org nyan-mode multiple-cursors markdown-mode magit flycheck emoji-cheat-sheet-plus eglot counsel company color-theme-sanityinc-tomorrow all-the-icons-ivy-rich all-the-icons-ivy all-the-icons-dired ace-window)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
