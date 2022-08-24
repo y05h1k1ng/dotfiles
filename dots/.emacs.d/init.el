@@ -369,7 +369,8 @@
   :mode (
          ("\\.go\\'" . go-mode)
          )
-  :init
+  :config
+  (setq gofmt-command "goimports")
   (add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
   )
 
