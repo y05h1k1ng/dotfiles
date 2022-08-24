@@ -345,6 +345,14 @@
   (setq recentf-auto-cleanup 10)
   )
 
+(use-package mwim
+  :ensure t
+  :bind (
+         ("C-a" . mwim-beginning-of-code-or-line)
+         ("C-e" . mwim-end-of-code-or-line)
+         )
+  )
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
