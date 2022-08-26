@@ -51,6 +51,8 @@
 ;; 日本語フォント
 (set-language-environment "Japanese")
 
+(show-paren-mode)
+
 (use-package underwater-theme
   :ensure t
   :config
