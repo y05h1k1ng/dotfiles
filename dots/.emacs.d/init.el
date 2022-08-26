@@ -30,6 +30,9 @@
 ;; 警告音もフラッシュもすべて無効
 (setq ring-bell-function 'ignore)
 
+;; windowのframe titleに絶対pathを表示
+(setq frame-title-format "%b %f %& %Z")
+
 ;;; バックアップファイル(*.~)
 (setq backup-directory-alist '((".*" . "~/.backup_emacs"))) ;; ~/.backup_emacs 以下に配置
 (setq version-control t) ;; 複数保存
