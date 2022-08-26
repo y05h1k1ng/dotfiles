@@ -54,6 +54,13 @@
 ;; 日本語フォント
 (set-language-environment "Japanese")
 
+;; wsl emacs frame
+(if (and (equal system-type 'gnu/linux)
+         (string-match-p "microsoft" (shell-command-to-string "uname -r")))
+    (set-frame-height (selected-frame) 40)
+  (set-frame-width (selected-frame) 100)
+  )
+
 (show-paren-mode)
 
 (use-package underwater-theme
@@ -298,7 +305,6 @@
                                       (deactivate-input-method)))))
          )
   :config
-  (setq default-frame-alist (append (list '(width . 72) '(height . 40))))
   (setq default-input-method "japanese-mozc-im")
   (setq mozc-candidate-style 'popup)
   (blink-cursor-mode 0)
