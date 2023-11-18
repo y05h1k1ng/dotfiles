@@ -192,7 +192,8 @@
   )
 
 (use-package undo-tree
-  :init (global-undo-tree-mode t)
+  :ensure t
+  :init (undo-tree-mode)
   :bind (
          ("M-/" . undo-tree-redo)
          )
@@ -202,7 +203,7 @@
 
 (use-package markdown-mode
   :ensure t
-  :ensure-system-package (pandoc . "sudo apt -y install pandoc")
+  :ensure-system-package pandoc
   :mode ("\\.md\\'" . gfm-mode)
   :config
   (setq markdown-command "pandoc")
