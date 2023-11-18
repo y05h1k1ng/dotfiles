@@ -201,8 +201,7 @@
   :ensure t
   :ensure-system-package pandoc
   :mode ("\\.md\\'" . gfm-mode)
-  :config
-  (setq markdown-command "pandoc")
+  :init (setq markdown-command "pandoc")
   )
 
 (use-package rainbow-delimiters
@@ -357,7 +356,7 @@
 
 (use-package lsp-pyright
   :ensure t
-  :ensure-system-package (pyright . "sudo npm -g install pyright")
+  :ensure-system-package (pyright . "npm -g install pyright")
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)
                          (lsp)))
@@ -388,7 +387,7 @@
   :init
   (use-package smartparens-config)
   :config
-  (smartparens-global-strict-mode t)
+  (smartparens-global-mode t)
   )
 
 (use-package recentf-ext
