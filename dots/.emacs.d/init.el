@@ -63,16 +63,12 @@
   )
 
 (show-paren-mode)
+(global-display-line-numbers-mode)
 
 (use-package underwater-theme
   :ensure t
   :config
   (load-theme 'underwater t)
-  )
-
-(use-package linum
-  :config
-  (global-linum-mode t)
   )
 
 (use-package winner
