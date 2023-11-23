@@ -22,6 +22,7 @@
 (eval-when-compile
   (require 'use-package)
   )
+(setq use-package-always-ensure t)
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
@@ -116,8 +117,7 @@
 
 (use-package counsel
   :ensure t
-  :ensure-system-package
-  (ag . "sudo apt -y install silversearcher-ag")
+  :ensure-system-package (ag . "brew install ag")
   :bind (
          ("M-x" . counsel-M-x)
          ("C-x C-f" . counsel-find-file)
@@ -356,7 +356,6 @@
 
 (use-package lsp-pyright
   :ensure t
-  :ensure-system-package (pyright . "npm -g install pyright")
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)
                          (lsp)))
@@ -384,8 +383,6 @@
 
 (use-package smartparens
   :ensure t
-  :init
-  (use-package smartparens-config)
   :config
   (smartparens-global-mode t)
   )
